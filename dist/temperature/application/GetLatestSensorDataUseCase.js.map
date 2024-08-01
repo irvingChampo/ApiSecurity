@@ -1,0 +1,1 @@
+{"version":3,"file":"GetLatestSensorDataUseCase.js","sourceRoot":"","sources":["../../../src/temperature/application/GetLatestSensorDataUseCase.ts"],"names":[],"mappings":";;;AAGA,MAAa,0BAA0B;IACrC,YAAoB,gBAAkC;QAAlC,qBAAgB,GAAhB,gBAAgB,CAAkB;IAAG,CAAC;IAE1D,KAAK,CAAC,OAAO;QACX,OAAO,MAAM,IAAI,CAAC,gBAAgB,CAAC,UAAU,EAAE,CAAC;IAClD,CAAC;CACF;AAND,gEAMC"}

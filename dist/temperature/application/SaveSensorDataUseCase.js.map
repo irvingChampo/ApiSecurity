@@ -1,0 +1,1 @@
+{"version":3,"file":"SaveSensorDataUseCase.js","sourceRoot":"","sources":["../../../src/temperature/application/SaveSensorDataUseCase.ts"],"names":[],"mappings":";;;AAGA,MAAa,qBAAqB;IAChC,YAAoB,gBAAkC;QAAlC,qBAAgB,GAAhB,gBAAgB,CAAkB;IAAG,CAAC;IAE1D,KAAK,CAAC,OAAO,CAAC,UAAkB;QAC9B,MAAM,IAAI,CAAC,gBAAgB,CAAC,IAAI,CAAC,UAAU,CAAC,CAAC;IAC/C,CAAC;CACF;AAND,sDAMC"}

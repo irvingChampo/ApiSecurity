@@ -1,0 +1,1 @@
+{"version":3,"file":"GetLatestSensorUltrasonicDataUseCase.js","sourceRoot":"","sources":["../../../../src/sensor/application/sensor/GetLatestSensorUltrasonicDataUseCase.ts"],"names":[],"mappings":";;;AAGA,MAAa,oCAAoC;IAC/C,YAAoB,0BAAsD;QAAtD,+BAA0B,GAA1B,0BAA0B,CAA4B;IAAG,CAAC;IAE9E,KAAK,CAAC,OAAO;QACX,OAAO,MAAM,IAAI,CAAC,0BAA0B,CAAC,UAAU,EAAE,CAAC;IAC5D,CAAC;CACF;AAND,oFAMC"}

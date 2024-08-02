@@ -1,5 +1,4 @@
 "use strict";
-// src/application/user/RegisterUserUseCase.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterUserUseCase = void 0;
 class RegisterUserUseCase {

@@ -1,5 +1,3 @@
-// src/adapters/user/MongooseUserRepository.ts
-
 import { User } from '../../domain/user/User';
 import UserModel, { UserDocument } from '../../models/UserModel';
 import { UserRepository } from '../../ports/user/UserRepository';

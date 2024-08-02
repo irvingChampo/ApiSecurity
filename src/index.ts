@@ -42,7 +42,6 @@ const sensorUltrasonicController = new SensorUltrasonicController(saveSensorUltr
 
 app.post('/api/register', (req, res) => userController.register(req, res));
 app.post('/api/login', (req, res) => userController.login(req, res));
-
 app.post('/api/sensor', (req, res) => sensorController.saveSensorData(req, res));
 app.get('/api/sensor/latest', (req, res) => sensorController.getLatestSensorData(req, res));
 app.post('/api/sensor/ultrasonic', (req, res) => sensorUltrasonicController.saveSensorUltrasonicData(req, res));

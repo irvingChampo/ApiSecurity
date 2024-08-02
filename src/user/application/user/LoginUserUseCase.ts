@@ -1,5 +1,3 @@
-// src/application/user/LoginUserUseCase.ts
-
 import { UserRepository } from '../../ports/user/UserRepository';
 
 export class LoginUserUseCase {

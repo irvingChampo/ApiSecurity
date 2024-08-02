@@ -1,5 +1,3 @@
-// src/application/user/RegisterUserUseCase.ts
-
 import { UserRepository } from '../../ports/user/UserRepository';
 import { User } from '../../domain/user/User';
 

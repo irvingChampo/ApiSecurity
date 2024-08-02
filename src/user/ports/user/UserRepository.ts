@@ -1,5 +1,3 @@
-// src/ports/user/UserRepository.ts
-
 import { User } from '../../domain/user/User';
 
 export interface UserRepository {

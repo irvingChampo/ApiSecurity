@@ -1,5 +1,3 @@
-// src/interfaces/user/UserController.ts
-
 import { Request, Response } from 'express';
 import { RegisterUserUseCase } from '../../application/user/RegisterUserUseCase';
 import { LoginUserUseCase } from '../../application/user/LoginUserUseCase';

@@ -1,5 +1,3 @@
-// src/models/UserModel.ts
-
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface UserDocument extends Document {

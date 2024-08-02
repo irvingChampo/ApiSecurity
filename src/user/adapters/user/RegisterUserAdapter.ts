@@ -1,5 +1,3 @@
-// src/adapters/user/RegisterUserAdapter.ts
-
 import { UserRepository } from '../../ports/user/UserRepository';
 
 export class RegisterUserAdapter {

@@ -1,5 +1,4 @@
 "use strict";
-// src/interfaces/user/UserController.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 class UserController {

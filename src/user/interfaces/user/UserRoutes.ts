@@ -1,5 +1,3 @@
-// src/interfaces/user/UserRoutes.ts
-
 import express from 'express';
 import { RegisterUserUseCase } from '../../application/user/RegisterUserUseCase';
 import { LoginUserUseCase } from '../../application/user/LoginUserUseCase';

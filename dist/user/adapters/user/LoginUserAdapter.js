@@ -1,5 +1,4 @@
 "use strict";
-// src/adapters/user/LoginUserAdapter.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginUserAdapter = void 0;
 class LoginUserAdapter {

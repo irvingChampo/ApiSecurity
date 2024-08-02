@@ -1,5 +1,4 @@
 "use strict";
-// src/application/user/LoginUserUseCase.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginUserUseCase = void 0;
 class LoginUserUseCase {

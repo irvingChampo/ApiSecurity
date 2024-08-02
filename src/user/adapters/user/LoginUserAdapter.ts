@@ -1,5 +1,3 @@
-// src/adapters/user/LoginUserAdapter.ts
-
 import { UserRepository } from '../../ports/user/UserRepository';
 
 export class LoginUserAdapter {

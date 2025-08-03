@@ -1,4 +1,4 @@
-# .github/workflows/deploy.yml
+# irvingchampo-apisecurity/.github/workflows/deploy.yml
 
 name: Deploy API to EC2
 
@@ -48,46 +48,36 @@ jobs:
       - name: 1. Checkout Code
         uses: actions/checkout@v4
 
-      - name: 2. Setup SSH Agent
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: 2. Create Directory and Clean Old Files
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          ssh-private-key: ${{ env.EC2_SSH_PRIVATE_KEY }}
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USER }}
+          key: ${{ env.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            sudo mkdir -p /var/www/security-cam-project
+            sudo rm -rf /var/www/security-cam-project/*
 
-      # Volvemos a usar la acción de appleboy, que es más confiable
       - name: 3. Copy ALL Files to EC2
         uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ env.EC2_HOST }}
           username: ${{ env.EC2_USER }}
           key: ${{ env.EC2_SSH_PRIVATE_KEY }}
-          source: "./*" # Copia todo, incluyendo carpetas ocultas como .github
+          source: "./*"
           target: "/var/www/security-cam-project"
 
-      # AÑADIMOS UN PASO DE VERIFICACIÓN
-      - name: 4. Verify Files on EC2
+      - name: 4. Execute Post-Deployment Script
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ env.EC2_HOST }}
           username: ${{ env.EC2_USER }}
           key: ${{ env.EC2_SSH_PRIVATE_KEY }}
           script: |
-            echo "--- Verifying copied files ---"
-            ls -la /var/www/security-cam-project
-            echo "--- Verifying scripts folder ---"
-            ls -la /var/www/security-cam-project/scripts/
-
-      - name: 5. Execute Deployment Scripts
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ env.EC2_HOST }}
-          username: ${{ env.EC2_USER }}
-          key: ${{ env.EC2_SSH_PRIVATE_KEY }}
-          script: |
-            # Le damos permisos de ejecución a los scripts
+            # Asegura que el usuario 'ubuntu' sea el dueño de todos los archivos
+            sudo chown -R ${{ env.EC2_USER }}:${{ env.EC2_USER }} /var/www/security-cam-project
+            
+            # Ejecuta el script de post-despliegue
+            echo "--- Running Post-Deploy ---"
             sudo chmod +x /var/www/security-cam-project/scripts/*.sh
-            
-            # Ejecutamos pre-deploy
-            sudo bash /var/www/security-cam-project/scripts/pre-deploy.sh
-            
-            # Ejecutamos post-deploy
             sudo bash /var/www/security-cam-project/scripts/post-deploy.sh

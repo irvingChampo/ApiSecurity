@@ -48,50 +48,46 @@ jobs:
       - name: 1. Checkout Code
         uses: actions/checkout@v4
 
-      # ==================================================================
-      # ========= INICIO DE LA SOLUCIÓN DEFINITIVA =======================
-      # ==================================================================
       - name: 2. Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ env.EC2_SSH_PRIVATE_KEY }}
 
-      - name: 3. Execute Remote Commands
-        run: |
-          # Añadimos la huella del servidor a los hosts conocidos para evitar prompts interactivos
-          ssh-keyscan -H ${{ env.EC2_HOST }} >> ~/.ssh/known_hosts
-          
-          # Ahora ejecutamos los comandos remotos usando el agente SSH configurado
-          ssh ${{ env.EC2_USER }}@${{ env.EC2_HOST }} 'bash -s' <<'ENDSSH'
-            # --- PRE-DEPLOY ---
-            echo "--- Running Pre-Deploy ---"
-            if [ -f /var/www/security-cam-project/scripts/pre-deploy.sh ]; then
-              sudo bash /var/www/security-cam-project/scripts/pre-deploy.sh
-            else
-              echo "Pre-deploy script not found, skipping."
-            fi
-            
-            # --- CLEAN DIRECTORY ---
-            echo "--- Cleaning Project Directory ---"
-            if [ -d "/var/www/security-cam-project" ]; then
-              sudo rm -rf /var/www/security-cam-project/*
-            fi
-          ENDSSH
+      # Volvemos a usar la acción de appleboy, que es más confiable
+      - name: 3. Copy ALL Files to EC2
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USER }}
+          key: ${{ env.EC2_SSH_PRIVATE_KEY }}
+          source: "./*" # Copia todo, incluyendo carpetas ocultas como .github
+          target: "/var/www/security-cam-project"
 
-      - name: 4. Copy Files to EC2
-        # Usamos scp estándar, que utilizará el agente SSH configurado
-        run: scp -r ./* ${{ env.EC2_USER }}@${{ env.EC2_HOST }}:/var/www/security-cam-project/
-
-      - name: 5. Execute Post-Deployment Script
+      # AÑADIMOS UN PASO DE VERIFICACIÓN
+      - name: 4. Verify Files on EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ env.EC2_HOST }}
           username: ${{ env.EC2_USER }}
-          key: ${{ env.EC2_SSH_PRIVATE_KEY }} # Se sigue necesitando por cómo funciona la acción
+          key: ${{ env.EC2_SSH_PRIVATE_KEY }}
           script: |
-            echo "--- Running Post-Deploy ---"
+            echo "--- Verifying copied files ---"
+            ls -la /var/www/security-cam-project
+            echo "--- Verifying scripts folder ---"
+            ls -la /var/www/security-cam-project/scripts/
+
+      - name: 5. Execute Deployment Scripts
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ env.EC2_HOST }}
+          username: ${{ env.EC2_USER }}
+          key: ${{ env.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            # Le damos permisos de ejecución a los scripts
             sudo chmod +x /var/www/security-cam-project/scripts/*.sh
+            
+            # Ejecutamos pre-deploy
+            sudo bash /var/www/security-cam-project/scripts/pre-deploy.sh
+            
+            # Ejecutamos post-deploy
             sudo bash /var/www/security-cam-project/scripts/post-deploy.sh
-      # ==================================================================
-      # ========= FIN DE LA SOLUCIÓN DEFINITIVA =========================
-      # ==================================================================
